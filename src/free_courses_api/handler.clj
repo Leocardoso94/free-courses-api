@@ -4,7 +4,8 @@
             [clj-http.client :as client]
             [clojure.data.json :as json]
             [environ.core :refer [env]]
-            [ring.middleware.json :refer [wrap-json-response wrap-json-body]]))
+            [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
+            [ring.middleware.cors :refer [wrap-cors]]))
 
 (defn get-api-url [params]
   (let [url "https://sheets.googleapis.com/v4/spreadsheets/"]
@@ -29,6 +30,9 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> app-routes
+  (-> 
+   app-routes
+  (wrap-cors :access-control-allow-origin ["*"]
+                       :access-control-allow-methods [:get :put :post :delete])
       wrap-json-response
       wrap-json-body))

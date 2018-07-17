@@ -7,7 +7,8 @@
                  [clj-http "3.9.0"]
                  [org.clojure/data.json "0.2.6"]
                  [environ "1.1.0"]
-                 [ring/ring-json "0.4.0"]]
+                 [ring/ring-json "0.4.0"]
+                 [ring-cors "0.1.12"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler free-courses-api.handler/app}
   :profiles
