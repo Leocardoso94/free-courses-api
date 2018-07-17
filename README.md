@@ -1,6 +1,6 @@
 # free-courses-api
 
-A rest api that reads the google sheets api to return the data.
+A webservice that returns a list of free courses.
 
 ## Prerequisites
 
