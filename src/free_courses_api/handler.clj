@@ -15,24 +15,23 @@
   (let [keys (first sheets-data)
         data (drop 1 sheets-data)]
 
-   (map #(reduce conj {} %)
-                         (map
-                          (fn [values]
-                            (map-indexed (fn [index value] {(nth keys index) value}) values)) data))))
+    (map #(reduce conj {} %)
+         (map
+          (fn [values]
+            (map-indexed (fn [index value] {(nth keys index) value}) values)) data))))
 
 (defn get-sheets-value [params]
   (normalize-sheets-data ((json/read-str ((client/get (get-api-url params)) :body) :key-fn keyword) :values)))
 
 (defroutes app-routes
-  (GET "/" []"Hello World!")
+  (GET "/" [] "Hello World!")
   (GET "/categories" [] (get-sheets-value "categories!A1:I"))
   (GET "/courses" [] (get-sheets-value "courses!A1:I"))
   (route/not-found "Not Found"))
 
 (def app
-  (-> 
-   app-routes
-  (wrap-cors :access-control-allow-origin ["*"]
-                       :access-control-allow-methods [:get :put :post :delete])
+  (-> app-routes
+      (wrap-cors :access-control-allow-origin [#".*"]
+                 :access-control-allow-methods [:get :put :post :delete])
       wrap-json-response
       wrap-json-body))
