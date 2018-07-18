@@ -25,8 +25,8 @@
 
 (defroutes app-routes
   (GET "/" [] "Hello World!")
-  (GET "/categories" [] (get-sheets-value "categories!A1:I"))
-  (GET "/courses" [] (get-sheets-value "courses!A1:I"))
+  (GET "/categories" [] (slurp "data/categories.json"))
+  (GET "/courses" [] (slurp "data/courses.json"))
   (route/not-found "Not Found"))
 
 (def app
